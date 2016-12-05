@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 use App\Article;
+use Validator;
 
 class ArticleController extends Controller
 {
@@ -18,6 +19,19 @@ class ArticleController extends Controller
          $this->middleware('auth' , ['except'=> ['index','show']]);
      }
 
+     /**
+   * Get the validation rules that apply to the request.
+   *
+   * @return array
+   */
+  public function rules()
+  {
+      return [
+          'title' => 'required|unique:posts|max:255',
+          'body' => 'required',
+      ];
+  }
+
     public function index()
     {
         $articles = Article::get();
@@ -31,7 +45,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('article.create');
     }
 
     /**
@@ -40,9 +54,10 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+      Article::create(Request::all());
+      return redirect('/article');
     }
 
     /**
@@ -56,7 +71,7 @@ class ArticleController extends Controller
         $article = Article::findorFail($id);
         if(empty($article))
         abort(404);
-        return view('article.show');
+        return view('article.show' , compact('article'));
     }
 
     /**
