@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Request;
 use App\Article;
-use Validator;
+//use Validator;
+use App\Http\Requests\ArticleRequest;
+
 
 class ArticleController extends Controller
 {
@@ -24,13 +26,7 @@ class ArticleController extends Controller
    *
    * @return array
    */
-  public function rules()
-  {
-      return [
-          'title' => 'required|unique:posts|max:255',
-          'body' => 'required',
-      ];
-  }
+
 
     public function index()
     {
@@ -54,10 +50,10 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(ArticleRequest $request)
     {
-      Article::create(Request::all());
-      return redirect('/article');
+      Article::create($request::all());
+      return redirect('article');
     }
 
     /**
@@ -82,7 +78,10 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+      $article = Article::findorFail($id);
+      if(empty($article))
+      abort(404);
+      return view('article.edit' , compact('article'));
     }
 
     /**
@@ -92,9 +91,11 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ArticleRequest $request, $id)
     {
-        //
+        $article = Article::findOrFail($id);
+        $article->update($request->all());
+        return redirect('article');
     }
 
     /**

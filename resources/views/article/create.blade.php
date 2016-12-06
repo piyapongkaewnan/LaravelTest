@@ -1,17 +1,23 @@
 @extends('layouts.app')
 @section('content')
-<h2><i class="fa fa-plus"></i> Add new Article</h2>
+
+<h3><i class="fa fa-plus"></i> Add new Article</h3>
+<hr>
 {!! Form::open(['url' => '/article'] , ['class' => 'form-group']) !!}
 
-{!! Form::label('title', 'Article Title :') !!}
-{!! Form::text('title', null,  ['class' => 'form-control']) !!}
+@if($errors->any())
+<div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Warning! Please fill data in below.</strong>
+  <ul>
+  @foreach($errors->all() as $error)
+    <li>{{ $error }}</li>
+  @endforeach
+  </ul>
+</div>
+  @endif
 
-{!! Form::label('body', 'Article Body :') !!}
-{!! Form::textarea('body', null,  ['class' => 'form-control']) !!}
+@include('article._form', ['submitButtonText' => '<i class="fa fa-save"></i> Add Article'])
 
-{!! Form::label('published_at', 'Article Publish :') !!}
-{!! Form::date('published_at', Carbon\Carbon::now()->format('Y-m-d'),  ['class' => 'form-control']) !!}
-<br>
-{!! Form::submit('Add Article', ['class'=> 'btn btn-primary'])!!}
 {!! Form::close() !!}
 @endsection
