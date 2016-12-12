@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Request;
+use Auth;
 use App\Article;
 //use Validator;
 use App\Http\Requests\ArticleRequest;
@@ -52,7 +53,12 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-      Article::create($request::all());
+      $article = new Article($request->all());
+      $article-> user_id = Auth::user()->id;
+      $article->save();
+
+      //Auth::user()->articles()->save($article);
+      //Article::create($request::all());
       return redirect('article');
     }
 
@@ -106,6 +112,9 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $article = Article::findOrFail($id);
+      $article ->delete();
+      return redirect('article');
     }
+
 }

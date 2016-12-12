@@ -28,6 +28,12 @@ Route::get('/home', 'HomeController@index');
 // Route::get('/article/{id}', 'ArticleController@show');
 // Route::get('/article/{id}/edit', 'ArticleController@edit');
 
+/*
+|--------------------------------------------------------------------------
+| Article Routes
+|--------------------------------------------------------------------------
+|
+*/
 Route::group(['prefix' => 'article'], function () {
     Route::get('/', 'ArticleController@index');  // retrieve
     Route::get('/article/page/{id?}', 'ArticleController@index');//page
@@ -36,5 +42,6 @@ Route::group(['prefix' => 'article'], function () {
     Route::get('/{id}', 'ArticleController@show'); //retrieve
     Route::get('/{id}/edit', 'ArticleController@edit'); //edit
     Route::put('/{id}', 'ArticleController@update'); //update
-    Route::delete('/{id}', 'ArticleController@detroy'); //detroy
+    Route::delete('/{id}', 'ArticleController@destroy'); //destroy
+
 });

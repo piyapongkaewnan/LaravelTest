@@ -11,11 +11,15 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <!-- {!! Html::style('vendor/bootstrap/css/bootstrap.min.css') !!} -->
+    {!! Html::style('vendor/bootstrap/css/bootstrap.min.css') !!}
     {!! Html::style('vendor/font-awesome/css/font-awesome.min.css') !!}
-    <link href="/css/app.css" rel="stylesheet">
+    <!-- <link href="/css/app.css" rel="stylesheet"> -->
 
     <!-- Scripts -->
+    <style type="text/css">
+    body { padding-top: 70px; }
+    </style>
+
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -24,10 +28,9 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                         <span class="sr-only">Toggle Navigation</span>
@@ -35,7 +38,6 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
                         <i class="fa fa-home"></i> {{ config('app.name', 'Laravel') }}
@@ -90,22 +92,17 @@
     <hr>
     <footer>
     <div class="container">
-    <div class="row">
-    <div class="col-md-12">
-    <div class="col-md-8">
-        <a href="#">Terms of Service</a>
+      <div class="row">
+        <div class="col-xs-12 col-md-8"><a href="#">Terms of Service</a></div>
+        <div class="col-xs-6 col-md-4"><span class="pull-right">© {{ date('Y')}} {{ config('app.name', 'Laravel') }}. All rights reserved</span></div>
       </div>
-    <div class="col-md-4">
-        <span class="pull-right">© {{ date('Y')}} {{ config('app.name', 'Laravel') }}. All rights reserved</span>
-    </div>
-    </div>
-    </div>
     </div>
     </footer>
     <!-- Footer -->
     <br>
     <!-- Scripts -->
     {!! Html::script('vendor/jquery/jquery.min.js') !!}
+    <!-- {!! Html::script('vendor/bootstrap/js/bootstrap.min.js') !!} -->
     <script src="/js/app.js"></script>
-</body>
+    </body>
 </html>
